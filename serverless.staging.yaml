@@ -9,7 +9,7 @@ provider:
   name: aws
   runtime: nodejs14.x
   stage: ${opt:stage}
-  profile: 
+  profile: "YOUR_AWS_PROFILE"
   region: ap-northeast-2
   lambdaHashingVersion: 20201221
   ecr:
