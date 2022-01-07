@@ -1,0 +1,32 @@
+service: my_batch
+
+frameworkVersion: '2 || 3'
+
+plugins:
+  - serverless-dotenv-plugin
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  stage: ${opt:stage}
+  profile: 
+  region: ap-northeast-2
+  lambdaHashingVersion: 20201221
+  ecr:
+    images:
+      appimage:
+        path: ./
+
+functions:
+  Batch:
+    events:
+      - schedule:
+          rate: cron(1/1 * * * ? *)
+          input:
+            action: "POINT_EXPIRED"
+    image:
+      name: appimage
+      command:
+        - dist/lambda.run
+      entryPoint:
+        - '/lambda-entrypoint.sh'
